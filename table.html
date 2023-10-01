@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="formulario" class="form">
+        <label for="nombre">Nombre completo</label>
+        <button type="button" class="clonar btn btn-secondary btn-sm" id="agregar" >+</button>
+        <div class="input-group">
+            <input type="text" class="uppercase form-control col-md-6" name="nombre[]" placeholder="NOMBRE">
+            <input type="text" class=" form-control col-md-6" name="apellido[]" placeholder="APELLIDO">
+            <button id="borrar" class="eliminar badge badge-pill badge-danger">Eliminar</button>
+            <span class="eliminar"><input type="button" value="Menos"></span>
+        </div>
+        <div id="contenedor"></div>
+    </div>
+</body>
+</html>
+<script>
+    let agregar = document.getElementById('agregar');
+    let contenido = document.getElementById('contenedor');
+    
+    $(document).ready(function(){
+        var i = 1;
+        $('.clonar').click(function(){
+            
+        // Clona el .input-group
+            var $clone = $('#formulario .input-group').last().clone();
+            // Borra los valores de los inputs clonados
+            $clone.find(':input').each(function () {
+                if ($(this).is('select')) {
+                this.selectedIndex = 0;
+                } else {
+                this.value = '';
+                }
+            });
+            // Agrega lo clonado al final del #formulario
+            $clone.appendTo('#formulario');
+            i++;
+            var btnDelete ='<button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">X</button>';
+        });
+        $(document).on("click",".eliminar",function(){
+            var parent = $(this).parents().get(0);
+            $(parent).remove();
+            });
+    });
+    
+    </script>
